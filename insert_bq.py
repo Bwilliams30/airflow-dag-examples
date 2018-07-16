@@ -8,17 +8,17 @@ import string
 
 BQL_ARG = Variable.get('gcp_bq_insert_query')
 
-TODAY = datetime.today()
+YESTERDAY = datetime.combine(datetime.today() - timedelta(1),
+                             datetime.min.time())
 
 DEFAULT_DAG_ARGS = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': TODAY,
+    'start_date': YESTERDAY,
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
-    'retry_delay': timedelta(minutes=5),
-    'schedule_interval': '@hourly'
+    'retry_delay': timedelta(minutes=5)
 }
 
 # Create Random Values to Insert on BigQuery
